@@ -22,20 +22,33 @@ def get_ext_ip():
 
 
 def main():
-		
+	old_ext_ip = ext_ip = get_ext_ip()
 	sleep_time_seconds = 30
-	ext_ip = '000'
+
+	if not ext_ip:
+		print "Couldn't get the initial IP address. Check yur network connection"
+		print "Exitting..."
+		exit()
+
+	print "Initial IP address is "+ext_ip
+	dropbox_update_ip(ext_ip)
+
+
 	while True:
 		print "Sleep for "+str(sleep_time_seconds)+" seconds"
 		sleep(sleep_time_seconds)
 		
-		bt = bytearray(ext_ip)
-		bt[0]+=1
-		ext_ip = str(bt)
+		ext_ip = get_ext_ip()
+		if not ext_ip:
+			print "failed to get external IP address. Will try again after next timeut"
+		else:
+			if(old_ext_ip != ext_ip):
+				print "Ip has changed from "+old_ext_ip+" to "+ext_ip
+				dropbox_update_ip(ext_ip)
+				old_ext_ip = ext_ip
 
-		print "Ip has changed from "+old_ext_ip+" to "+ext_ip
-		dropbox_update_ip(ext_ip)
-			
+			else:
+				print "IP is still the same. Continue"
 	
 if __name__ == "__main__":
         main()
