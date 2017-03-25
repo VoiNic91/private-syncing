@@ -2,13 +2,13 @@ import dropbox
 import sys
 
 dbx = dropbox.Dropbox('vK3D7j1Xny8AAAAAAAAPzlnZhnrxVLWwHT1WIi0CBr_06RCap_qYYE7NQsGr6KDm')
-ip_file='/ip.txt'
+ip_file='ip.txt'
 
 def get_ext_ip():
 	ip = ''
 	
 	try:
-		md, res = dbx.files_download(ip_file)
+		md, res = dbx.files_download('/'+ip_file)
 		ip = res.content
 	except:
 		print("Error:", sys.exc_info()[0])
@@ -30,13 +30,16 @@ def main():
 	
 	res = dbx.files_list_folder('')
 	while True:
-		folder_result = dbx.files_longpoll(res.cursor)
+		folder_result = dbx.files_list_folder_longpoll(res.cursor)
 		
 		if folder_result.changes is True:
 			res = dbx.files_list_folder_continue(res.cursor)
 			print "New changes: "
 			for meta in res.entries:
 				print meta.name
+				if meta.name == ip_file:
+					ext_ip = get_ext_ip()
+					print ext_ip
 				
 
 if __name__ == "__main__":
