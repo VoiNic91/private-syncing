@@ -3,25 +3,36 @@ from time import sleep
 import dropbox
 
 ip_file='/ip.txt'
-dbx = dropbox.Dropbox('vK3D7j1Xny8AAAAAAAAPzlnZhnrxVLWwHT1WIi0CBr_06RCap_qYYE7NQsGr6KDm')
+dbx = None
+
+def dropbox_init():
+	global dbx
+
+	key_file = open("/home/voinovann/.private-syncing/key.txt")
+	key = key_file.read().strip()
+
+	dbx = dropbox.Dropbox(key)
+
 
 def dropbox_update_ip(new_ip):
 	dbx.files_upload(new_ip, ip_file)
 
+
 def get_ext_ip():
 	ext_ip = ''
 	p = Popen(["dig", "+short", "myip.opendns.com", "@resolver1.opendns.com"], stdout=PIPE, stderr=PIPE)
-	
+
 	if p.wait() == 0:
 		ext_ip = p.stdout.read()
 	else:
 		print p.stderr.read()+' '+str(p.poll())
-		
+
 	return ext_ip.strip()
-	
 
 
 def main():
+	dropbox_init()
+
 	old_ext_ip = ext_ip = get_ext_ip()
 	sleep_time_seconds = 30
 
@@ -49,6 +60,6 @@ def main():
 
 			else:
 				print "IP is still the same. Continue"
-	
+
 if __name__ == "__main__":
         main()
