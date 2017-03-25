@@ -1,0 +1,2 @@
+- python dropbox package: sudo pip install dropbox
+- dnsutils for 'dig' command: sudo apt-get install dnsutils
