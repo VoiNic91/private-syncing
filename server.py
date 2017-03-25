@@ -15,7 +15,7 @@ def dropbox_init():
 
 
 def dropbox_update_ip(new_ip):
-	dbx.files_upload(new_ip, ip_file)
+        dbx.files_upload(new_ip, ip_file, mode=dropbox.files.WriteMode('overwrite', None))
 
 
 def get_ext_ip():
