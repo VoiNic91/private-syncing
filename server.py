@@ -6,7 +6,7 @@ ip_file='/ip.txt'
 dbx = dropbox.Dropbox('vK3D7j1Xny8AAAAAAAAPzlnZhnrxVLWwHT1WIi0CBr_06RCap_qYYE7NQsGr6KDm')
 
 def dropbox_update_ip(new_ip):
-	dbx.files_upload(new_ip, ip_file)
+        dbx.files_upload(new_ip, ip_file, mode=dropbox.files.WriteMode('overwrite', None))
 
 def get_ext_ip():
 	ext_ip = ''
