@@ -1,6 +1,7 @@
 from subprocess import Popen, PIPE
 from time import sleep
 import dropbox
+import os
 
 ip_file='/ip.txt'
 dbx = None
@@ -8,7 +9,7 @@ dbx = None
 def dropbox_init():
 	global dbx
 
-	key_file = open("/home/voinovann/.private-syncing/key.txt")
+	key_file = open(os.path.expanduser("~")+"/.private-syncing/key.txt")
 	key = key_file.read().strip()
 
 	dbx = dropbox.Dropbox(key)
