@@ -54,10 +54,9 @@ def main():
 			print "failed to get external IP address. Will try again after next timeut"
 		else:
 			if(old_ext_ip != ext_ip):
-				print "Ip has changed from "+old_ext_ip+" to "+ext_ip
+				print time.strftime("%c")+" Ip has changed from "+old_ext_ip+" to "+ext_ip
 				dropbox_update_ip(ext_ip)
 				old_ext_ip = ext_ip
-
 			else:
 				print "IP is still the same. Continue"
 
