@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import dropbox
 import sys
 import os

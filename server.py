@@ -1,4 +1,7 @@
+#!/usr/bin/python
+
 from subprocess import Popen, PIPE
+import time
 from time import sleep
 import dropbox
 import os
@@ -42,12 +45,12 @@ def main():
 		print "Exitting..."
 		exit()
 
-	print "Initial IP address is "+ext_ip
+	print time.strftime("%c")+": Initial IP address is "+ext_ip
 	dropbox_update_ip(ext_ip)
 
 
 	while True:
-		print "Sleep for "+str(sleep_time_seconds)+" seconds"
+#		print "Sleep for "+str(sleep_time_seconds)+" seconds"
 		sleep(sleep_time_seconds)
 		
 		ext_ip = get_ext_ip()
@@ -55,11 +58,11 @@ def main():
 			print "failed to get external IP address. Will try again after next timeut"
 		else:
 			if(old_ext_ip != ext_ip):
-				print time.strftime("%c")+" Ip has changed from "+old_ext_ip+" to "+ext_ip
+				print time.strftime("%c")+": Ip has changed from "+old_ext_ip+" to "+ext_ip
 				dropbox_update_ip(ext_ip)
 				old_ext_ip = ext_ip
-			else:
-				print "IP is still the same. Continue"
+#			else:
+#				print "IP is still the same. Continue"
 
 if __name__ == "__main__":
         main()
